@@ -94,7 +94,7 @@ namespace Application
 			void OnPopulate( CommandEvent& anEvent);
 			void OnUnpopulate( CommandEvent& anEvent);
 			void OnStartListening( CommandEvent& anEvent);
-			void OnSendMessage( CommandEvent& anEvent);
+			void OnSyncWereld( CommandEvent& anEvent);
 			void OnStopListening( CommandEvent& anEvent);
 	};
 	//	class MainFrameWindow

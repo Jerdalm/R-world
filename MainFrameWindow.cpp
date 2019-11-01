@@ -292,8 +292,8 @@ namespace Application
 					GBPosition( 2, 0),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
-								"Send message",
-								[this](CommandEvent &anEvent){this->OnSendMessage(anEvent);}),
+								"Sync Wereld",
+								[this](CommandEvent &anEvent){this->OnSyncWereld(anEvent);}),
 					GBPosition( 2, 1),
 					GBSpan( 1, 1), EXPAND);
 		sizer->Add( makeButton( panel,
@@ -392,13 +392,13 @@ namespace Application
 	/**
 	 *
 	 */
-	void MainFrameWindow::OnSendMessage( CommandEvent& UNUSEDPARAM(anEvent))
+	void MainFrameWindow::OnSyncWereld( CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		if (robot)
 		{
-			std::string remoteIpAdres = "192.168.43.218";
+			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
 			if (MainApplication::isArgGiven( "-remote_ip"))
