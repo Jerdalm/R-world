@@ -458,8 +458,25 @@ namespace Model
 				front = BoundedVector( vertex.asPoint(), position);
 				position.x = vertex.x;
 				position.y = vertex.y;
+				std::time_t turnTime;
 
-				if (arrived(goal) || collision())
+				if(collision())
+				{
+					turnTime = std::time(nullptr);
+					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": collision"));
+					//notifyObservers();
+					speed = -10.0;
+
+				}
+
+
+				std::time_t restartTime = std::time(nullptr);
+
+				if(restartTime - turnTime >= 1){
+					speed = 10.0;
+				}
+
+				if (arrived(goal))
 				{
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived or collision"));
 					notifyObservers();

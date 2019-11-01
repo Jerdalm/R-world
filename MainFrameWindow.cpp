@@ -398,7 +398,7 @@ namespace Application
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		if (robot)
 		{
-			std::string remoteIpAdres = "localhost";
+			std::string remoteIpAdres = "192.168.43.218";
 			std::string remotePort = "12345";
 
 			if (MainApplication::isArgGiven( "-remote_ip"))

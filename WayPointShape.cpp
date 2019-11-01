@@ -73,7 +73,7 @@ namespace View
 
 		int x = centre.x - (size.x / 2);
 		int y = centre.y - (size.y / 2);
-		dc.DrawRectangle( x, y, size.x, size.y);
+		dc.DrawRectangle( x+20, y-20, size.x, size.y);
 
 		dc.SetPen( wxPen( WXSTRING( "BLACK"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawText( WXSTRING( title), centre.x - titleSize.x / 2, y + spacing + borderWidth);
