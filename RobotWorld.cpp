@@ -424,10 +424,10 @@ namespace Model
 		        std::cout << coordY << std::endl;
 		        if (currentType == 0)
 		        {
-		        	RobotWorld::getRobotWorld().newRobot( "Robot", Point(coordX,coordY),false);
+		        	RobotWorld::getRobotWorld().newRobot( "Robot2", Point(coordX,coordY),false);
 		        } else if (currentType == 1)
 		        {
-		        	RobotWorld::getRobotWorld().newGoal( "Goal", Point(coordX,coordY),false);
+		        	RobotWorld::getRobotWorld().newGoal( "Goal2", Point(coordX,coordY),false);
 		        }
 		        ++currentType;
 		    }
