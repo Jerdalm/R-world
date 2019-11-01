@@ -394,12 +394,6 @@ namespace Model
 		    auto coords_end = std::sregex_iterator();
 		    unsigned short currentType = 0;
 
-		    unsigned long wallAx = 0;
-		    unsigned long wallAy = 0;
-		    unsigned long wallBx = 0;
-		    unsigned long wallBy = 0;
-		    unsigned char currentWall = 'a';
-
 		    for (std::sregex_iterator i = coords_begin; i != coords_end; ++i) {
 		    	unsigned long coordX = 0;
 		    	unsigned long coordY = 0;
@@ -426,33 +420,16 @@ namespace Model
 		        		coordY = std::stoi(match2_str);
 		        	}
 		        }
-		        //std::cout << coordX << std::endl;
-		        //std::cout << coordY << std::endl;
+		        std::cout << coordX << std::endl;
+		        std::cout << coordY << std::endl;
 		        if (currentType == 0)
 		        {
 		        	RobotWorld::getRobotWorld().newRobot( "Robot2", Point(coordX,coordY),false);
 		        } else if (currentType == 1)
 		        {
 		        	RobotWorld::getRobotWorld().newGoal( "Goal2", Point(coordX,coordY),false);
-		        } else if (currentType == 2)
-		        {
-		        	if (currentWall == 'a')
-		        	{
-		        		wallAx = coordX;
-		        		wallAy = coordY;
-		        		currentWall = 'b';
-		        	} else if (currentWall == 'b')
-					{
-		        		wallBx = coordX;
-		        		wallBy = coordY;
-
-		        		RobotWorld::getRobotWorld().newWall( Point(wallAx,wallAy), Point(wallBx,wallBy) ,false);
-					}
 		        }
-		        if (currentType != 2)
-		        {
-		        	++currentType;
-		        }
+		        ++currentType;
 		    }
 		    notifyObservers();
 	}

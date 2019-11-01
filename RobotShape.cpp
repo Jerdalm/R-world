@@ -129,9 +129,9 @@ namespace View
 		dc.DrawPoint( cornerPoints[1]);
 		dc.SetPen( wxPen( WXSTRING( "GREEN"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[0]);
-		dc.SetPen( wxPen( WXSTRING( "INDIAN RED"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "YELLOW"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[2]);
-		dc.SetPen( wxPen( WXSTRING( "PALE GREEN"), borderWidth, wxPENSTYLE_SOLID));
+		dc.SetPen( wxPen( WXSTRING( "BLUE"), borderWidth, wxPENSTYLE_SOLID));
 		dc.DrawPoint( cornerPoints[3]);
 
 		double angle = Utils::Shape2DUtils::getAngle( getRobot()->getFront()) + 0.5 * Utils::PI;

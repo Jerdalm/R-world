@@ -90,7 +90,7 @@ namespace View
 		dc.SetBrush( *wxWHITE_BRUSH);
 		if (isSelected())
 		{
-			dc.SetPen( wxPen( WXSTRING( getSelectionColour()), borderWidth, wxPENSTYLE_SOLID));
+			dc.SetPen( wxPen( WXSTRING(getNormalColour()), borderWidth, wxPENSTYLE_SOLID));
 		} else
 		{
 			dc.SetPen( wxPen( WXSTRING( getNormalColour()), borderWidth, wxPENSTYLE_SOLID));

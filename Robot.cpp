@@ -371,9 +371,8 @@ namespace Model
 
 				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 				Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
-				Model::WallPtr wall = Model::RobotWorld::getRobotWorld().getWalls().at(0);
 				aMessage.setMessageType(CopyWorldResponse);
-				aMessage.setBody(robot->asString() + goal->asString() + wall->asString());
+				aMessage.setBody(robot->asString() + goal->asString());
 				break;
 			}
 			default:
@@ -544,10 +543,11 @@ namespace Model
 	 */
 	bool Robot::collision()
 	{
-		Point frontLeft = getFrontLeft();
-		Point frontRight = getFrontRight();
-		Point backLeft = getBackLeft();
-		Point backRight = getBackRight();
+		auto Deviation = 40;
+		Point frontLeft = Point(getFrontLeft().x+Deviation, getFrontLeft().y+Deviation);
+		Point frontRight = Point(getFrontRight().x+Deviation, getFrontRight().y-Deviation);
+		Point backLeft = Point(getBackLeft().y-Deviation, getBackLeft().y+Deviation);
+		Point backRight = Point(getBackRight().x-Deviation, getBackRight().y-Deviation);
 
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
 		for (WallPtr wall : walls)
