@@ -143,6 +143,10 @@ namespace Model
 			/**
 			 * Returns a 1-line description of the object
 			 */
+
+			void copyWorld(std::string data);
+
+
 			virtual std::string asString() const;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging

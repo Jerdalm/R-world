@@ -358,9 +358,16 @@ namespace Model
 			case EchoRequest:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
-
+				Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 				aMessage.setMessageType(EchoResponse);
 				aMessage.setBody( ": case 1 " + aMessage.asString());
+				break;
+			}
+			case CopyWorld:
+			{
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": CopyWorld"));
+				Application::Logger::log(aMessage.asString());
+				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
 				break;
 			}
 			default:
@@ -381,7 +388,7 @@ namespace Model
 		{
 			case EchoResponse:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": case EchoResponse: not implemented, ") + aMessage.asString());
+				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( "") + aMessage.asString());
 
 				break;
 			}

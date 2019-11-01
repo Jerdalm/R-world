@@ -381,6 +381,13 @@ namespace Model
 			notifyObservers();
 		}
 	}
+
+	void RobotWorld::copyWorld(std::string data)
+	{
+		Application::Logger::log( __PRETTY_FUNCTION__);
+
+	}
+
 	/**
 	 *
 	 */

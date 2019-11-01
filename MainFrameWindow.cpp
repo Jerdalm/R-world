@@ -8,6 +8,7 @@
 #include "Button.hpp"
 #include "RobotWorld.hpp"
 #include "Robot.hpp"
+#include "Goal.hpp"
 #include "Shape2DUtils.hpp"
 #include <iostream>
 #include "Thread.hpp"
@@ -393,9 +394,10 @@ namespace Application
 	void MainFrameWindow::OnSendMessage( CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		if (robot)
 		{
-			std::string remoteIpAdres = "192.168.43.141";
+			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
 			if (MainApplication::isArgGiven( "-remote_ip"))
@@ -412,7 +414,7 @@ namespace Application
 			Messaging::Client c1ient( remoteIpAdres,
 									  remotePort,
 									  robot);
-			Messaging::Message message( Model::Robot::MessageType::EchoRequest, robot->asString());
+			Messaging::Message message( Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString());
 			c1ient.dispatchMessage( message);
 		}
 	}

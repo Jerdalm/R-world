@@ -246,7 +246,8 @@ namespace Model
 			enum MessageType
 			{
 				EchoRequest,
-				EchoResponse
+				EchoResponse,
+				CopyWorld
 			};
 
 		protected:
