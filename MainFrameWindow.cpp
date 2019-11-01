@@ -9,6 +9,7 @@
 #include "RobotWorld.hpp"
 #include "Robot.hpp"
 #include "Goal.hpp"
+#include "Wall.hpp"
 #include "Shape2DUtils.hpp"
 #include <iostream>
 #include <vector>
@@ -396,6 +397,7 @@ namespace Application
 	{
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
+		Model::WallPtr wall = Model::RobotWorld::getRobotWorld().getWalls().at(0);
 		if (robot)
 		{
 			std::string remoteIpAdres = "localhost";
@@ -415,7 +417,7 @@ namespace Application
 			Messaging::Client c1ient( remoteIpAdres,
 									  remotePort,
 									  robot);
-			Messaging::Message message( Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString());
+			Messaging::Message message( Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString() + wall->asString());
 			c1ient.dispatchMessage( message);
 		}
 	}

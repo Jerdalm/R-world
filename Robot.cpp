@@ -371,8 +371,9 @@ namespace Model
 
 				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 				Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
+				Model::WallPtr wall = Model::RobotWorld::getRobotWorld().getWalls().at(0);
 				aMessage.setMessageType(CopyWorldResponse);
-				aMessage.setBody(robot->asString() + goal->asString());
+				aMessage.setBody(robot->asString() + goal->asString() + wall->asString());
 				break;
 			}
 			default:
