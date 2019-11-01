@@ -5,9 +5,9 @@
 #include "Thread.hpp"
 #include "MathUtils.hpp"
 #include "Logger.hpp"
+#include "Wall.hpp"
 #include "Goal.hpp"
 #include "WayPoint.hpp"
-#include "Wall.hpp"
 #include "RobotWorld.hpp"
 #include "Shape2DUtils.hpp"
 #include "CommunicationService.hpp"
@@ -368,6 +368,11 @@ namespace Model
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": CopyWorld"));
 				Application::Logger::log(aMessage.asString());
 				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
+
+				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+				Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
+				aMessage.setMessageType(CopyWorldResponse);
+				aMessage.setBody(robot->asString() + goal->asString());
 				break;
 			}
 			default:
@@ -389,6 +394,12 @@ namespace Model
 			case EchoResponse:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( "") + aMessage.asString());
+
+				break;
+			}
+			case CopyWorldResponse:
+			{
+				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
 
 				break;
 			}

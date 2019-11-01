@@ -247,7 +247,8 @@ namespace Model
 			{
 				EchoRequest,
 				EchoResponse,
-				CopyWorld
+				CopyWorld,
+				CopyWorldResponse
 			};
 
 		protected:

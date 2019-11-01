@@ -11,6 +11,7 @@
 #include "Goal.hpp"
 #include "Shape2DUtils.hpp"
 #include <iostream>
+#include <vector>
 #include "Thread.hpp"
 #include "Logger.hpp"
 #include "Client.hpp"
