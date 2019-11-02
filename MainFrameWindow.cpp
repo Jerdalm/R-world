@@ -381,8 +381,8 @@ namespace Application
 			if (robot->getRouteFound())
 			{
 				Logger::log( "Start Driving");
-				stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
-				robot.drive();
+				//robot->drive();
+				//stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
 			}
 		}
 	/**

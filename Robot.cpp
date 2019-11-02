@@ -15,9 +15,13 @@
 #include "Message.hpp"
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
-#include "MainFrameWindow.hpp"
 #include <thread>
 #include <mutex>
+#include <chrono>
+#include <windows.h>
+
+#include "Client.hpp"
+#include "Message.hpp"
 
 namespace Model
 {
@@ -197,8 +201,12 @@ namespace Model
 
 		goal = RobotWorld::getRobotWorld().getGoal( "Goal");
 		calculateRoute(goal);
-
-		//drive();
+		stuurBericht(StartDriving, "start");
+		while (waiting)
+		{
+			Sleep(10);
+		}
+		drive();
 	}
 	/**
 	 *
@@ -391,7 +399,8 @@ namespace Model
 			case StartDriving:
 				if (routeFound)
 				{
-					drive();
+					waiting = false;
+					//aMessage.setMessageType(StartDrivingResponse);
 				}
 				break;
 			default:
@@ -581,5 +590,23 @@ namespace Model
 		}
 		return false;
 	}
+
+	void Robot::stuurBericht(Model::Robot::MessageType type, std::string data)
+		{
+			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+			if (robot)
+					{
+						std::string remoteIpAdres = "192.168.1.161";
+						std::string remotePort = "12345";
+
+						// We will request an echo message. The response will be "Hello World", if all goes OK,
+						// "Goodbye cruel world!" if something went wrong.
+						Messaging::Client c1ient( remoteIpAdres,
+												  remotePort,
+												  robot);
+						Messaging::Message message(type, data);
+						c1ient.dispatchMessage( message);
+					}
+		}
 
 } // namespace Model
