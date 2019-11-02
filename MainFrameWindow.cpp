@@ -13,6 +13,7 @@
 #include "Shape2DUtils.hpp"
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Thread.hpp"
 #include "Logger.hpp"
 #include "Client.hpp"
@@ -350,8 +351,29 @@ namespace Application
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && !robot->isActing())
 		{
-			robot->startActing();
+		if (robot)
+				{
+					std::string remoteIpAdres = "192.168.1.161";
+					std::string remotePort = "12345";
+
+					if (MainApplication::isArgGiven( "-remote_ip"))
+					{
+						remoteIpAdres = MainApplication::getArg( "-remote_ip").value;
+					}
+					if (MainApplication::isArgGiven( "-remote_port"))
+					{
+						remotePort = MainApplication::getArg( "-remote_port").value;
+					}
+					// We will request an echo message. The response will be "Hello World", if all goes OK,
+					// "Goodbye cruel world!" if something went wrong.
+					Messaging::Client c1ient( remoteIpAdres,
+											  remotePort,
+											  robot);
+					Messaging::Message message( Model::Robot::MessageType::StartRobot, "Start");
+					c1ient.dispatchMessage( message);
+				}
 		}
+		robot->startActing();
 	}
 	/**
 	 *
@@ -398,28 +420,7 @@ namespace Application
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		Model::WallPtr wall = Model::RobotWorld::getRobotWorld().getWalls().at(0);
-		if (robot)
-		{
-			std::string remoteIpAdres = "localhost";
-			std::string remotePort = "12345";
-
-			if (MainApplication::isArgGiven( "-remote_ip"))
-			{
-				remoteIpAdres = MainApplication::getArg( "-remote_ip").value;
-			}
-			if (MainApplication::isArgGiven( "-remote_port"))
-			{
-				remotePort = MainApplication::getArg( "-remote_port").value;
-			}
-
-			// We will request an echo message. The response will be "Hello World", if all goes OK,
-			// "Goodbye cruel world!" if something went wrong.
-			Messaging::Client c1ient( remoteIpAdres,
-									  remotePort,
-									  robot);
-			Messaging::Message message( Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString() + wall->asString());
-			c1ient.dispatchMessage( message);
-		}
+		MainFrameWindow::stuurBericht(Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString() + wall->asString());
 	}
 	/**
 	 *
@@ -431,5 +432,32 @@ namespace Application
 		{
 			thijs->stopCommunicating();
 		}
+	}
+
+	void MainFrameWindow::stuurBericht(Model::Robot::MessageType type, std::string data)
+	{
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+		if (robot)
+				{
+					std::string remoteIpAdres = "192.168.1.161";
+					std::string remotePort = "12345";
+
+					if (MainApplication::isArgGiven( "-remote_ip"))
+					{
+						remoteIpAdres = MainApplication::getArg( "-remote_ip").value;
+					}
+					if (MainApplication::isArgGiven( "-remote_port"))
+					{
+						remotePort = MainApplication::getArg( "-remote_port").value;
+					}
+
+					// We will request an echo message. The response will be "Hello World", if all goes OK,
+					// "Goodbye cruel world!" if something went wrong.
+					Messaging::Client c1ient( remoteIpAdres,
+											  remotePort,
+											  robot);
+					Messaging::Message message(type, data);
+					c1ient.dispatchMessage( message);
+				}
 	}
 } // namespace Application

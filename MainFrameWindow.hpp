@@ -3,6 +3,7 @@
 
 #include "Config.hpp"
 #include "Widgets.hpp"
+#include "Robot.hpp"
 
 namespace Base
 {
@@ -96,6 +97,7 @@ namespace Application
 			void OnStartListening( CommandEvent& anEvent);
 			void OnSyncWereld( CommandEvent& anEvent);
 			void OnStopListening( CommandEvent& anEvent);
+			void stuurBericht(Model::Robot::MessageType type, std::string data);
 	};
 	//	class MainFrameWindow
 } //namespace Application

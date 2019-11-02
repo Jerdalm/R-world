@@ -248,7 +248,8 @@ namespace Model
 				EchoRequest,
 				EchoResponse,
 				CopyWorld,
-				CopyWorldResponse
+				CopyWorldResponse,
+				StartRobot
 			};
 
 		protected:

@@ -24,7 +24,7 @@ namespace Model
 									const Point& aPosition /*= Point(-1,-1)*/,
 									bool aNotifyObservers /*= true*/)
 	{
-		Application::Logger::log( __PRETTY_FUNCTION__);
+		//Application::Logger::log( __PRETTY_FUNCTION__);
 		RobotPtr robot( new Robot( aName, aPosition));
 		robots.push_back( robot);
 		if (aNotifyObservers == true)
@@ -411,7 +411,7 @@ namespace Model
 		        std::regex coord_regex("[0-9]+");
 		        auto coord_begin = std::sregex_iterator(match_str.begin(), match_str.end(), coord_regex);
 		        auto coord_end = std::sregex_iterator();
-		        Application::Logger::log(match_str);
+		        //Application::Logger::log(match_str);
 
 		        for (std::sregex_iterator j = coord_begin; j != coord_end; ++j)
 		        {

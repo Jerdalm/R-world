@@ -400,6 +400,7 @@ namespace Model
 			}
 			case CopyWorldResponse:
 			{
+				Application::Logger::log( __PRETTY_FUNCTION__ );
 				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
 
 				break;
