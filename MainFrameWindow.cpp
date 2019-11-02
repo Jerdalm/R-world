@@ -286,6 +286,11 @@ namespace Application
 								[this](CommandEvent &anEvent){this->OnStopRobot(anEvent);}),
 					GBPosition( 1, 1),
 					GBSpan( 1, 1), EXPAND);
+		sizer->Add( makeButton( panel,
+								"Start driving",
+								[this](CommandEvent &anEvent){this->OnStartDriving(anEvent);}),
+					GBPosition( 1, 2),
+					GBSpan( 1, 1), EXPAND);
 
 
 		sizer->Add( makeButton( panel,
@@ -353,14 +358,6 @@ namespace Application
 		{
 			stuurBericht(Model::Robot::MessageType::StartRobot, "Start");
 			robot->startActing();
-			while (!robot->getRouteFound())
-			{
-				//wait until routecalculation is complete
-			}
-			if (robot->getRouteFound())
-			{
-				stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
-			}
 		}
 	}
 	/**
@@ -375,6 +372,18 @@ namespace Application
 			robot->stopActing();
 		}
 	}
+	/**
+	 *
+	 */
+	void MainFrameWindow::OnStartDriving( CommandEvent& UNUSEDPARAM(anEvent))
+		{
+			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+			if (robot->getRouteFound())
+			{
+				Logger::log( "Start Driving");
+				stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
+			}
+		}
 	/**
 	 *
 	 */

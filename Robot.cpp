@@ -356,10 +356,10 @@ namespace Model
 	{
 		switch(aMessage.getMessageType())
 		{
+		Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 			case EchoRequest:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
-				Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 				aMessage.setMessageType(EchoResponse);
 				aMessage.setBody( ": case 1 " + aMessage.asString());
 				break;

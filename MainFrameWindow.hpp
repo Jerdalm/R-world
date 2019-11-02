@@ -92,6 +92,7 @@ namespace Application
 
 			void OnStartRobot( CommandEvent& anEvent);
 			void OnStopRobot( CommandEvent& anEvent);
+			void OnStartDriving( CommandEvent& anEvent);
 			void OnPopulate( CommandEvent& anEvent);
 			void OnUnpopulate( CommandEvent& anEvent);
 			void OnStartListening( CommandEvent& anEvent);
