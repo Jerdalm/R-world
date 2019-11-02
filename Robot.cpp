@@ -376,6 +376,12 @@ namespace Model
 				aMessage.setBody(robot->asString() + goal->asString() + wall->asString());
 				break;
 			}
+			case StartRobot:
+			{
+				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+				robot->startActing();
+				break;
+			}
 			default:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default"));
