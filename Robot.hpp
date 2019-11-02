@@ -206,6 +206,11 @@ namespace Model
 			{
 				return path;
 			}
+
+			bool getRouteFound() const
+			{
+				return routeFound;
+			}
 			/**
 			 * @name Messaging::MessageHandler functions
 			 */
@@ -249,7 +254,8 @@ namespace Model
 				EchoResponse,
 				CopyWorld,
 				CopyWorldResponse,
-				StartRobot
+				StartRobot,
+				StartDriving
 			};
 
 		protected:
@@ -285,6 +291,7 @@ namespace Model
 			bool acting;
 			bool driving;
 			bool communicating;
+			bool routeFound = false;
 
 			std::thread robotThread;
 			mutable std::recursive_mutex robotMutex;

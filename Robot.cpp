@@ -15,6 +15,7 @@
 #include "Message.hpp"
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
+#include "MainFrameWindow.hpp"
 
 namespace Model
 {
@@ -195,7 +196,7 @@ namespace Model
 		goal = RobotWorld::getRobotWorld().getGoal( "Goal");
 		calculateRoute(goal);
 
-		drive();
+		//drive();
 	}
 	/**
 	 *
@@ -385,6 +386,12 @@ namespace Model
 				}
 				break;
 			}
+			case StartDriving:
+				if (routeFound)
+				{
+					drive();
+				}
+				break;
 			default:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default"));
@@ -536,6 +543,7 @@ namespace Model
 			stopHandlingNotificationsFor( astar);
 
 			Application::Logger::setDisable( false);
+			routeFound = true;
 		}
 	}
 	/**

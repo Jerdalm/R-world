@@ -351,8 +351,16 @@ namespace Application
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot && !robot->isActing())
 		{
-			stuurBericht(Model::Robot::MessageType::CopyWorld, "Start");
+			stuurBericht(Model::Robot::MessageType::StartRobot, "Start");
 			robot->startActing();
+			while (!robot->getRouteFound())
+			{
+				//wait until routecalculation is complete
+			}
+			if (robot->getRouteFound())
+			{
+				stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
+			}
 		}
 	}
 	/**
