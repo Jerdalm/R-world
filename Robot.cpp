@@ -379,7 +379,10 @@ namespace Model
 			case StartRobot:
 			{
 				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
-				robot->startActing();
+				if (robot && !robot->isActing())
+				{
+					robot->startActing();
+				}
 				break;
 			}
 			default:
