@@ -255,7 +255,8 @@ namespace Model
 				CopyWorld,
 				CopyWorldResponse,
 				StartRobot,
-				StartDriving
+				StartDriving,
+				StartDrivingResponse
 			};
 
 		protected:
