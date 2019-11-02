@@ -16,6 +16,8 @@
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
 #include "MainFrameWindow.hpp"
+#include <thread>
+#include <mutex>
 
 namespace Model
 {
@@ -390,8 +392,6 @@ namespace Model
 				if (routeFound)
 				{
 					drive();
-					aMessage.setMessageType(StartDrivingResponse);
-					aMessage.setBody(aMessage.asString());
 				}
 				break;
 			default:
@@ -423,12 +423,6 @@ namespace Model
 
 				break;
 			}
-			case StartDrivingResponse:
-				if (routeFound)
-				{
-					drive();
-				}
-				break;
 			default:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());

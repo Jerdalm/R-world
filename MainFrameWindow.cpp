@@ -382,6 +382,7 @@ namespace Application
 			{
 				Logger::log( "Start Driving");
 				stuurBericht(Model::Robot::MessageType::StartDriving, "Start");
+				robot.drive();
 			}
 		}
 	/**
