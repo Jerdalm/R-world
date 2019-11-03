@@ -507,7 +507,7 @@ namespace Model
 
 				std::time_t restartTime = std::time(nullptr);
 
-				if(restartTime - turnTime >= 1){
+				if(restartTime - turnTime >= 0.5){
 					speed = 10.0;
 				}
 
@@ -600,6 +600,10 @@ namespace Model
 		Point twee = Point(position.x - size.y/2 - 20, position.y + size.y/2 + 20);
 		Point drie = Point(robot2->getPosition().x - robot2->getSize().y/2 - 20, robot2->getPosition().y - robot2->getSize().y/2 - 20);
 		Point vier = Point(robot2->getPosition().x + robot2->getSize().y/2 + 20, robot2->getPosition().y + robot2->getSize().y/2 + 20);
+		Point vijf = Point(een.x-size.y, een.y);
+		Point zes = Point(twee.x+size.y, twee.y);
+		Point zeven = Point(drie.x+robot2->getSize.y, drie.y);
+		Point acht = Point(vier.x-robot2->getSize.y, vier.y);
 		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) && wontWait == false)
 		{
 			return true;
