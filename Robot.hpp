@@ -105,6 +105,11 @@ namespace Model
 			 */
 			void setSpeed( float aNewSpeed,
 						   bool aNotifyObservers = true);
+
+			void setWaiting(bool value)
+			{
+				waiting = value;
+			}
 			/**
 			 *
 			 * @return true if the robot is acting, i.e. either planning or driving
@@ -206,6 +211,11 @@ namespace Model
 			{
 				return path;
 			}
+
+			bool getRouteFound() const
+			{
+				return routeFound;
+			}
 			/**
 			 * @name Messaging::MessageHandler functions
 			 */
@@ -248,14 +258,24 @@ namespace Model
 				EchoRequest,
 				EchoResponse,
 				CopyWorld,
-				CopyWorldResponse
+				CopyWorldResponse,
+				StartRobot,
+				StartDriving,
+				StartDrivingResponse,
+				UpdatePosition
 			};
-
-		protected:
 			/**
 			 *
 			 */
 			void drive();
+
+			void setWontWait(bool value)
+			{
+				wontWait = value;
+			}
+
+		protected:
+
 			/**
 			 *
 			 */
@@ -268,6 +288,8 @@ namespace Model
 			 *
 			 */
 			bool collision();
+
+			void stuurBericht(Model::Robot::MessageType type, std::string data);
 		private:
 			std::string name;
 
@@ -284,6 +306,9 @@ namespace Model
 			bool acting;
 			bool driving;
 			bool communicating;
+			bool routeFound = false;
+			bool waiting = true;
+			bool wontWait = false;
 
 			std::thread robotThread;
 			mutable std::recursive_mutex robotMutex;

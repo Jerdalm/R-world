@@ -15,6 +15,15 @@
 #include "Message.hpp"
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
+#include <thread>
+#include <mutex>
+#include <chrono>
+#include <windows.h>
+
+#include "Client.hpp"
+#include "Message.hpp"
+#include <stdio.h>
+#include <math.h>
 
 namespace Model
 {
@@ -194,7 +203,11 @@ namespace Model
 
 		goal = RobotWorld::getRobotWorld().getGoal( "Goal");
 		calculateRoute(goal);
-
+		stuurBericht(StartDriving, "start");
+		while (waiting)
+		{
+			Sleep(10);
+		}
 		drive();
 	}
 	/**
@@ -353,12 +366,12 @@ namespace Model
 	 */
 	void Robot::handleRequest( Messaging::Message& aMessage)
 	{
+		Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 		switch(aMessage.getMessageType())
 		{
 			case EchoRequest:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
-				Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
+				//Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 				aMessage.setMessageType(EchoResponse);
 				aMessage.setBody( ": case 1 " + aMessage.asString());
 				break;
@@ -368,12 +381,32 @@ namespace Model
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": CopyWorld"));
 				Application::Logger::log(aMessage.asString());
 				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
+				wontWait = false;
 
 				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 				Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 				aMessage.setMessageType(CopyWorldResponse);
 				aMessage.setBody(robot->asString() + goal->asString());
 				break;
+			}
+			case StartRobot:
+			{
+				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+				if (robot && !robot->isActing())
+				{
+					robot->startActing();
+				}
+				break;
+			}
+			case StartDriving:
+			{
+				waiting = false;
+				//aMessage.setMessageType(StartDrivingResponse);
+				break;
+			}
+			case UpdatePosition:
+			{
+				RobotWorld::getRobotWorld().moveRobot2(aMessage.asString());
 			}
 			default:
 			{
@@ -399,13 +432,14 @@ namespace Model
 			}
 			case CopyWorldResponse:
 			{
+				Application::Logger::log( __PRETTY_FUNCTION__ );
 				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
 
 				break;
 			}
 			default:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
+				//Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
 				break;
 			}
 		}
@@ -472,7 +506,7 @@ namespace Model
 
 				std::time_t restartTime = std::time(nullptr);
 
-				if(restartTime - turnTime >= 1){
+				if(restartTime - turnTime >= 0.5){
 					speed = 10.0;
 				}
 
@@ -492,6 +526,7 @@ namespace Model
 				{
 					return;
 				}
+				stuurBericht(UpdatePosition, asString());
 			} // while
 
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)
@@ -525,6 +560,7 @@ namespace Model
 			stopHandlingNotificationsFor( astar);
 
 			Application::Logger::setDisable( false);
+			routeFound = true;
 		}
 	}
 	/**
@@ -550,6 +586,7 @@ namespace Model
 		Point backRight = Point(getBackRight().x-Deviation, getBackRight().y-Deviation);
 
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
+		Model::RobotPtr robot2 = Model::RobotWorld::getRobotWorld().getRobot( "Robot2");
 		for (WallPtr wall : walls)
 		{
 			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) ||
@@ -559,7 +596,40 @@ namespace Model
 				return true;
 			}
 		}
+		Point een = Point(position.x + size.y/2 + 20, position.y - size.y/2 - 20);
+		Point twee = Point(position.x - size.y/2 - 20, position.y + size.y/2 + 20);
+		Point drie = Point(robot2->getPosition().x - robot2->getSize().y/2 - 20, robot2->getPosition().y - robot2->getSize().y/2 - 20);
+		Point vier = Point(robot2->getPosition().x + robot2->getSize().y/2 + 20, robot2->getPosition().y + robot2->getSize().y/2 + 20);
+		Point vijf = Point(een.x-size.y, een.y);
+		Point zes = Point(twee.x+size.y, twee.y);
+		Point zeven = Point(drie.x+robot2->getSize().y, drie.y);
+		Point acht = Point(vier.x-robot2->getSize().y, vier.y);
+		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) || Utils::Shape2DUtils::intersect( vijf, zes, zeven, acht))
+		{
+			if (wontWait == false)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
+
+	void Robot::stuurBericht(Model::Robot::MessageType type, std::string data)
+		{
+			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
+			if (robot)
+					{
+						std::string remoteIpAdres = "192.168.1.161";
+						std::string remotePort = "12345";
+
+						// We will request an echo message. The response will be "Hello World", if all goes OK,
+						// "Goodbye cruel world!" if something went wrong.
+						Messaging::Client c1ient( remoteIpAdres,
+												  remotePort,
+												  robot);
+						Messaging::Message message(type, data);
+						c1ient.dispatchMessage( message);
+					}
+		}
 
 } // namespace Model
