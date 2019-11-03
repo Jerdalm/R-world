@@ -143,18 +143,19 @@ namespace Model
 			/**
 			 * Returns a 1-line description of the object
 			 */
-
-			void copyWorld(std::string data);
-
-			void moveRobot2(std::string data);
-
-
 			virtual std::string asString() const;
 			/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
 			virtual std::string asDebugString() const;
-			//@}
+			/**
+			 * creates a datastring with the essential information to copy a constructed world.
+			 */
+			void copyWorld(std::string data);
+			/**
+			 * creates an update for the data needed to move the 2nd robot on the screen.
+			 */
+			void moveRobot2(std::string data);
 
 		protected:
 			/**

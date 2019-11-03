@@ -23,7 +23,6 @@ namespace Application
 	 * @return MainApplication The MainApplication object for this application.
 	 */
 	MainApplication& TheApp();
-
 	/**
 	 *
 	 */

@@ -268,14 +268,16 @@ namespace Model
 			 *
 			 */
 			void drive();
-
+			/**
+			 * set the value of Boolean wontWait,
+			 * which determines which of the 2 robots will reverse it's course when collision is bound to happen.
+			 */
 			void setWontWait(bool value)
 			{
 				wontWait = value;
 			}
 
 		protected:
-
 			/**
 			 *
 			 */
@@ -288,8 +290,11 @@ namespace Model
 			 *
 			 */
 			bool collision();
-
+			/**
+			 * sends a message to the connected Robotworld application.
+			 */
 			void stuurBericht(Model::Robot::MessageType type, std::string data);
+
 		private:
 			std::string name;
 

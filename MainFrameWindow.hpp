@@ -18,7 +18,6 @@ namespace View
 namespace Application
 {
 	class LogTextCtrl;
-
 	/**
 	 *
 	 */
@@ -89,7 +88,6 @@ namespace Application
 			void OnWidgetDebugTraceFunction( CommandEvent& anEvent);
 			void OnStdOutDebugTraceFunction( CommandEvent& anEvent);
 			void OnAbout( CommandEvent& anEvent);
-
 			void OnStartRobot( CommandEvent& anEvent);
 			void OnStopRobot( CommandEvent& anEvent);
 			void OnStartDriving( CommandEvent& anEvent);
@@ -98,7 +96,11 @@ namespace Application
 			void OnStartListening( CommandEvent& anEvent);
 			void OnSendMessage( CommandEvent& anEvent);
 			void OnStopListening( CommandEvent& anEvent);
+			/*
+			 * sends message to connected applicationwindow.
+			 */
 			void stuurBericht(Model::Robot::MessageType type, std::string data);
+
 	};
 	//	class MainFrameWindow
 } //namespace Application
