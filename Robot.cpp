@@ -602,11 +602,14 @@ namespace Model
 		Point vier = Point(robot2->getPosition().x + robot2->getSize().y/2 + 20, robot2->getPosition().y + robot2->getSize().y/2 + 20);
 		Point vijf = Point(een.x-size.y, een.y);
 		Point zes = Point(twee.x+size.y, twee.y);
-		Point zeven = Point(drie.x+robot2->getSize.y, drie.y);
-		Point acht = Point(vier.x-robot2->getSize.y, vier.y);
-		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) && wontWait == false)
+		Point zeven = Point(drie.x+robot2->getSize().y, drie.y);
+		Point acht = Point(vier.x-robot2->getSize().y, vier.y);
+		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) || Utils::Shape2DUtils::intersect( vijf, zes, zeven, acht))
 		{
-			return true;
+			if (wontWait == false)
+			{
+				return true;
+			}
 		}
 		return false;
 	}
