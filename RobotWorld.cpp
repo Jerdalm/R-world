@@ -457,6 +457,46 @@ namespace Model
 		    notifyObservers();
 	}
 
+	void RobotWorld::moveRobot2(std::string data)
+	{
+		Application::Logger::log( __PRETTY_FUNCTION__);
+		const std::string s = data;
+
+		std::regex coords_regex("[0-9]+,[0-9]+");
+		auto coords_begin = std::sregex_iterator(s.begin(), s.end(), coords_regex);
+		auto coords_end = std::sregex_iterator();
+
+		for (std::sregex_iterator i = coords_begin; i != coords_end; ++i) {
+			unsigned long coordX = 0;
+			unsigned long coordY = 0;
+			unsigned char currentCoord = 'x';
+
+			std::smatch match = *i;
+			std::string match_str = match.str();
+
+			std::regex coord_regex("[0-9]+");
+			auto coord_begin = std::sregex_iterator(match_str.begin(), match_str.end(), coord_regex);
+			auto coord_end = std::sregex_iterator();
+			//Application::Logger::log(match_str);
+
+			for (std::sregex_iterator j = coord_begin; j != coord_end; ++j)
+			{
+				std::smatch match2 = *j;
+				std::string match2_str = match2.str();
+				if (currentCoord == 'x')
+				{
+					coordX = std::stoi(match2_str);
+				    currentCoord = 'y';
+				} else if (currentCoord == 'y')
+					{
+				    	coordY = std::stoi(match2_str);
+				    }
+			}
+			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot2");
+			robot->setPosition(Point(coordX, coordY), true);
+		}
+	}
+
 	/**
 	 *
 	 */

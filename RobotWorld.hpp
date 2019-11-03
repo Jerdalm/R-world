@@ -146,6 +146,8 @@ namespace Model
 
 			void copyWorld(std::string data);
 
+			void moveRobot2(std::string data);
+
 
 			virtual std::string asString() const;
 			/**

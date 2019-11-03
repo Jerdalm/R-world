@@ -364,9 +364,9 @@ namespace Model
 	 */
 	void Robot::handleRequest( Messaging::Message& aMessage)
 	{
+		Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 		switch(aMessage.getMessageType())
 		{
-		Application::Logger::log( __PRETTY_FUNCTION__ + aMessage.asString());
 			case EchoRequest:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
@@ -397,12 +397,15 @@ namespace Model
 				break;
 			}
 			case StartDriving:
-				if (routeFound)
-				{
-					waiting = false;
-					//aMessage.setMessageType(StartDrivingResponse);
-				}
+			{
+				waiting = false;
+				//aMessage.setMessageType(StartDrivingResponse);
 				break;
+			}
+			case UpdatePosition:
+			{
+				RobotWorld::getRobotWorld().moveRobot2(aMessage.asString());
+			}
 			default:
 			{
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": default"));
@@ -434,7 +437,7 @@ namespace Model
 			}
 			default:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
+				//Application::Logger::log( __PRETTY_FUNCTION__ + std::string( ": default not implemented, ") + aMessage.asString());
 				break;
 			}
 		}
@@ -521,6 +524,7 @@ namespace Model
 				{
 					return;
 				}
+				stuurBericht(UpdatePosition, asString());
 			} // while
 
 			for (std::shared_ptr< AbstractSensor > sensor : sensors)

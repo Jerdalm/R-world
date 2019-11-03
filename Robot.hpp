@@ -261,7 +261,8 @@ namespace Model
 				CopyWorldResponse,
 				StartRobot,
 				StartDriving,
-				StartDrivingResponse
+				StartDrivingResponse,
+				UpdatePosition
 			};
 			/**
 			 *
