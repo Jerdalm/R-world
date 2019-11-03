@@ -22,6 +22,8 @@
 
 #include "Client.hpp"
 #include "Message.hpp"
+#include <stdio.h>
+#include <math.h>
 
 namespace Model
 {
@@ -369,7 +371,7 @@ namespace Model
 		{
 			case EchoRequest:
 			{
-				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
+				//Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 				aMessage.setMessageType(EchoResponse);
 				aMessage.setBody( ": case 1 " + aMessage.asString());
 				break;
@@ -379,6 +381,7 @@ namespace Model
 				Application::Logger::log( __PRETTY_FUNCTION__ + std::string(": CopyWorld"));
 				Application::Logger::log(aMessage.asString());
 				RobotWorld::getRobotWorld().copyWorld(aMessage.asString());
+				wontWait = false;
 
 				Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 				Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
@@ -583,6 +586,7 @@ namespace Model
 		Point backRight = getBackRight();
 
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
+		Model::RobotPtr robot2 = Model::RobotWorld::getRobotWorld().getRobot( "Robot2");
 		for (WallPtr wall : walls)
 		{
 			if (Utils::Shape2DUtils::intersect( frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) ||
@@ -591,6 +595,14 @@ namespace Model
 			{
 				return true;
 			}
+		}
+		Point een = Point(position.x + size.y/2 + 20, position.y - size.y/2 - 20);
+		Point twee = Point(position.x - size.y/2 - 20, position.y + size.y/2 + 20);
+		Point drie = Point(robot2->getPosition().x - robot2->getSize().y/2 - 20, robot2->getPosition().y - robot2->getSize().y/2 - 20);
+		Point vier = Point(robot2->getPosition().x + robot2->getSize().y/2 + 20, robot2->getPosition().y + robot2->getSize().y/2 + 20);
+		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) && wontWait == false)
+		{
+			return true;
 		}
 		return false;
 	}

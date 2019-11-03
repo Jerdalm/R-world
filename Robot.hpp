@@ -269,6 +269,11 @@ namespace Model
 			 */
 			void drive();
 
+			void setWontWait(bool value)
+			{
+				wontWait = value;
+			}
+
 		protected:
 
 			/**
@@ -303,6 +308,7 @@ namespace Model
 			bool communicating;
 			bool routeFound = false;
 			bool waiting = true;
+			bool wontWait = false;
 
 			std::thread robotThread;
 			mutable std::recursive_mutex robotMutex;

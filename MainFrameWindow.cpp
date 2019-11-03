@@ -419,6 +419,7 @@ namespace Application
 		Model::GoalPtr goal = Model::RobotWorld::getRobotWorld().getGoal( "Goal");
 		Model::WallPtr wall = Model::RobotWorld::getRobotWorld().getWalls().at(0);
 		MainFrameWindow::stuurBericht(Model::Robot::MessageType::CopyWorld, robot->asString() + goal->asString() + wall->asString());
+		robot->setWontWait(true);
 	}
 	/**
 	 *
