@@ -18,7 +18,6 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
-#include <windows.h>
 
 #include "Client.hpp"
 #include "Message.hpp"
