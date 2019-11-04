@@ -18,7 +18,7 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
-
+//#include <windows.h>
 #include "Client.hpp"
 #include "Message.hpp"
 #include <stdio.h>
@@ -205,7 +205,7 @@ namespace Model
 		stuurBericht(StartDriving, "start");
 		while (waiting)
 		{
-			Sleep(10);
+			//Sleep(10);
 		}
 		drive();
 	}
@@ -406,6 +406,7 @@ namespace Model
 			case UpdatePosition:
 			{
 				RobotWorld::getRobotWorld().moveRobot2(aMessage.asString());
+				break;
 			}
 			default:
 			{
@@ -505,7 +506,7 @@ namespace Model
 
 				std::time_t restartTime = std::time(nullptr);
 
-				if(restartTime - turnTime >= 0.5){
+				if(restartTime - turnTime >= 1){
 					speed = 10.0;
 				}
 
