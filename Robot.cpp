@@ -580,10 +580,10 @@ namespace Model
 	 */
 	bool Robot::collision()
 	{
-		auto Deviation = 40;
+		auto Deviation = 0;
 		Point frontLeft = Point(getFrontLeft().x+Deviation, getFrontLeft().y+Deviation);
 		Point frontRight = Point(getFrontRight().x+Deviation, getFrontRight().y-Deviation);
-		Point backLeft = Point(getBackLeft().y-Deviation, getBackLeft().y+Deviation);
+		Point backLeft = Point(getBackLeft().x-Deviation, getBackLeft().y+Deviation);
 		Point backRight = Point(getBackRight().x-Deviation, getBackRight().y-Deviation);
 
 		const std::vector< WallPtr >& walls = RobotWorld::getRobotWorld().getWalls();
@@ -605,7 +605,7 @@ namespace Model
 		Point zes = Point(twee.x+size.y, twee.y);
 		Point zeven = Point(drie.x+robot2->getSize().y, drie.y);
 		Point acht = Point(vier.x-robot2->getSize().y, vier.y);
-		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) || Utils::Shape2DUtils::intersect( vijf, zes, zeven, acht))
+		if (Utils::Shape2DUtils::intersect( een, twee, drie, vier) || Utils::Shape2DUtils::intersect( vijf, zes, zeven, acht) || Utils::Shape2DUtils::intersect( een, twee, drie, acht) || Utils::Shape2DUtils::intersect( drie, vier, een, zes))
 		{
 			if (wontWait == false)
 			{
