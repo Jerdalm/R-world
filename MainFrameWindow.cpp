@@ -438,7 +438,7 @@ namespace Application
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 		if (robot)
 				{
-					std::string remoteIpAdres = "192.168.1.161";
+					std::string remoteIpAdres = "localhost";
 					std::string remotePort = "12345";
 
 					if (MainApplication::isArgGiven( "-remote_ip"))

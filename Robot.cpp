@@ -619,9 +619,17 @@ namespace Model
 			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot( "Robot");
 			if (robot)
 					{
-						std::string remoteIpAdres = "192.168.1.161";
+						std::string remoteIpAdres = "localhost";
 						std::string remotePort = "12345";
 
+						if (Application::MainApplication::isArgGiven( "-remote_ip"))
+						{
+							remoteIpAdres = Application::MainApplication::getArg( "-remote_ip").value;
+						}
+						if (Application::MainApplication::isArgGiven( "-remote_port"))
+						{
+							remotePort = Application::MainApplication::getArg( "-remote_port").value;
+						}
 						// We will request an echo message. The response will be "Hello World", if all goes OK,
 						// "Goodbye cruel world!" if something went wrong.
 						Messaging::Client c1ient( remoteIpAdres,
