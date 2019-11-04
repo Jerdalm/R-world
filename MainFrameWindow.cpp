@@ -9,6 +9,7 @@
 #include "RobotWorld.hpp"
 #include "Robot.hpp"
 #include "Goal.hpp"
+#include "Wall.hpp"
 #include "Shape2DUtils.hpp"
 #include <iostream>
 #include <vector>
